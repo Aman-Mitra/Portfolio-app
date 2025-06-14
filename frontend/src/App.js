@@ -8,8 +8,55 @@ const App = () => {
   const [skillsAnimated, setSkillsAnimated] = useState(false);
   const [mode, setMode] = useState('hardware'); // 'software' or 'hardware'
 
-  const fullText = "Hi, I'm Aman Mitra";
+  // ==================== EDITABLE PERSONAL INFO SECTION ====================
+  // 🎯 EDIT YOUR PERSONAL INFORMATION HERE
   
+  const PERSONAL_INFO = {
+    name: "Aman Mitra",
+    
+    // Software Mode Introduction
+    software: {
+      title: "Full Stack Developer & Software Engineer",
+      subtitle: "Passionate about creating beautiful, functional, and user-friendly applications that make a difference in people's lives.",
+      
+      // Edit your software bio paragraphs here
+      aboutParagraphs: [
+        "I'm a passionate full-stack developer with a keen eye for design and a love for creating innovative solutions. With several years of experience in web development, I specialize in modern JavaScript frameworks and have a strong foundation in both frontend and backend technologies.",
+        
+        "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee while brainstorming the next big idea. I believe in writing clean, maintainable code and creating user experiences that delight and inspire.",
+        
+        "I believe in the power of technology to solve real-world problems and am committed to creating applications that are not only functional but also scalable, maintainable, and user-centric."
+      ],
+      
+      // Software contact info
+      email: "aman.mitra@developer.com",
+      linkedin: "linkedin.com/in/aman-mitra-dev",
+      github: "github.com/aman-mitra-dev",
+      website: "portfolio.aman-mitra.com"
+    },
+    
+    // Hardware Mode Introduction  
+    hardware: {
+      title: "Hardware Engineer & Electronics Designer",
+      subtitle: "Passionate about designing innovative electronic systems, from PCB layout to embedded firmware. Bridging the gap between digital concepts and physical reality.",
+      
+      // Edit your hardware bio paragraphs here
+      aboutParagraphs: [
+        "I'm a passionate hardware engineer with expertise in electronics design, embedded systems, and PCB development. With a strong foundation in both analog and digital circuit design, I specialize in creating innovative solutions that bridge the physical and digital worlds.",
+        
+        "My experience spans from low-level firmware development to high-level system architecture. I enjoy the challenge of optimizing power consumption, ensuring signal integrity, and designing robust systems that perform reliably in demanding environments. When not designing circuits, I'm exploring emerging technologies like IoT, edge computing, and sustainable electronics.",
+        
+        "I believe in the power of hardware to solve real-world problems and am committed to creating designs that are not only functional but also manufacturable, testable, and cost-effective."
+      ],
+      
+      // Hardware contact info
+      email: "aman.mitra@hardware-engineer.com", 
+      linkedin: "linkedin.com/in/aman-mitra-hardware",
+      github: "github.com/aman-mitra-hw",
+      website: "hardware-insights.blog"
+    }
+  };
+
   // ==================== EDITABLE DATA SECTION ====================
   // 🎯 EDIT THESE SECTIONS TO CUSTOMIZE YOUR PORTFOLIO
   
@@ -126,7 +173,7 @@ const App = () => {
     'Node.js Professional Certificate'
   ];
 
-  // Hardware Certifications - Add/Remove here
+  // Hardware Certifications - Add/Remove here 
   const HARDWARE_CERTIFICATIONS = [
     'IPC-A-610 Certified (PCB Assembly)',
     'ARM Cortex-M Specialist',
@@ -156,35 +203,25 @@ const App = () => {
   const currentProjects = mode === 'software' ? SOFTWARE_PROJECTS : HARDWARE_PROJECTS;
   const currentCertifications = mode === 'software' ? SOFTWARE_CERTIFICATIONS : HARDWARE_CERTIFICATIONS;
   const currentTools = mode === 'software' ? SOFTWARE_TOOLS : HARDWARE_TOOLS;
+  const currentPersonalInfo = PERSONAL_INFO[mode];
+  
+  // Dynamic typing text based on name
+  const fullText = `Hi, I'm ${PERSONAL_INFO.name}`;
 
-  // Mode-specific content
+  // Mode-specific styling and images
   const modeContent = {
     software: {
-      title: 'Full Stack Developer & Software Engineer',
-      subtitle: 'Passionate about creating beautiful, functional, and user-friendly applications that make a difference in people\'s lives.',
       heroImage: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5',
-      aboutText: [
-        'I\'m a passionate full-stack developer with a keen eye for design and a love for creating innovative solutions. With several years of experience in web development, I specialize in modern JavaScript frameworks and have a strong foundation in both frontend and backend technologies.',
-        'When I\'m not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee while brainstorming the next big idea. I believe in writing clean, maintainable code and creating user experiences that delight and inspire.',
-        'I believe in the power of technology to solve real-world problems and am committed to creating applications that are not only functional but also scalable, maintainable, and user-centric.'
-      ],
       aboutImage: 'https://images.pexels.com/photos/699459/pexels-photo-699459.jpeg',
       primaryColor: 'purple',
       secondaryColor: 'pink',
       accentColor: 'blue'
     },
     hardware: {
-      title: 'Hardware Engineer & Electronics Designer',
-      subtitle: 'Passionate about designing innovative electronic systems, from PCB layout to embedded firmware. Bridging the gap between digital concepts and physical reality.',
       heroImage: 'https://images.unsplash.com/photo-1650530415027-dc9199f473ec',
-      aboutText: [
-        'I\'m a passionate hardware engineer with expertise in electronics design, embedded systems, and PCB development. With a strong foundation in both analog and digital circuit design, I specialize in creating innovative solutions that bridge the physical and digital worlds.',
-        'My experience spans from low-level firmware development to high-level system architecture. I enjoy the challenge of optimizing power consumption, ensuring signal integrity, and designing robust systems that perform reliably in demanding environments.',
-        'I believe in the power of hardware to solve real-world problems and am committed to creating designs that are not only functional but also manufacturable, testable, and cost-effective.'
-      ],
       aboutImage: 'https://images.unsplash.com/photo-1557701197-2f99da0922dd',
       primaryColor: 'green',
-      secondaryColor: 'blue',
+      secondaryColor: 'blue', 
       accentColor: 'teal'
     }
   };
@@ -193,6 +230,7 @@ const App = () => {
 
   // Typing animation effect
   useEffect(() => {
+    setTypedText(''); // Reset text when name changes
     let index = 0;
     const timer = setInterval(() => {
       if (index < fullText.length) {
@@ -203,7 +241,7 @@ const App = () => {
       }
     }, 100);
     return () => clearInterval(timer);
-  }, []);
+  }, [fullText]);
 
   // Reset animations when mode changes
   useEffect(() => {
@@ -248,24 +286,6 @@ const App = () => {
     setTimeout(() => setSkillsAnimated(true), 500);
   };
 
-  const getColorClasses = (type) => {
-    const colors = {
-      software: {
-        primary: 'purple',
-        secondary: 'pink',
-        accent: 'blue'
-      },
-      hardware: {
-        primary: 'green',
-        secondary: 'blue',
-        accent: 'teal'
-      }
-    };
-    
-    const colorSet = colors[mode];
-    return `${colorSet[type]}-500`;
-  };
-
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
@@ -274,7 +294,7 @@ const App = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
               <span className={`text-2xl font-bold bg-gradient-to-r from-${current.primaryColor}-400 to-${current.secondaryColor}-400 bg-clip-text text-transparent`}>
-                AM
+                {PERSONAL_INFO.name.split(' ').map(name => name.charAt(0)).join('')}
               </span>
             </div>
             
@@ -345,10 +365,10 @@ const App = () => {
             </span>
           </h1>
           <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            {current.title}
+            {currentPersonalInfo.title}
           </p>
           <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
-            {current.subtitle}
+            {currentPersonalInfo.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -396,7 +416,7 @@ const App = () => {
             </h2>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                {current.aboutText.map((paragraph, index) => (
+                {currentPersonalInfo.aboutParagraphs.map((paragraph, index) => (
                   <p key={index} className="text-lg text-gray-300 leading-relaxed">
                     {paragraph}
                   </p>
@@ -559,9 +579,7 @@ const App = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Email</p>
-                      <p className="text-gray-400">
-                        {mode === 'software' ? 'aman.mitra@developer.com' : 'aman.mitra@hardware-engineer.com'}
-                      </p>
+                      <p className="text-gray-400">{currentPersonalInfo.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -570,9 +588,7 @@ const App = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">LinkedIn</p>
-                      <p className="text-gray-400">
-                        {mode === 'software' ? 'linkedin.com/in/aman-mitra-dev' : 'linkedin.com/in/aman-mitra-hardware'}
-                      </p>
+                      <p className="text-gray-400">{currentPersonalInfo.linkedin}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -583,9 +599,16 @@ const App = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">GitHub</p>
-                      <p className="text-gray-400">
-                        {mode === 'software' ? 'github.com/aman-mitra-dev' : 'github.com/aman-mitra-hw'}
-                      </p>
+                      <p className="text-gray-400">{currentPersonalInfo.github}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-12 h-12 bg-${current.primaryColor}-500/20 rounded-full flex items-center justify-center`}>
+                      <span className={`text-${current.primaryColor}-400 text-xl`}>🌐</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-medium">Website</p>
+                      <p className="text-gray-400">{currentPersonalInfo.website}</p>
                     </div>
                   </div>
                 </div>
@@ -698,7 +721,7 @@ const App = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-gray-400">
-              © 2024 Aman Mitra - {mode === 'software' ? 'Full Stack Developer' : 'Hardware Engineer'}. 
+              © 2024 {PERSONAL_INFO.name} - {mode === 'software' ? 'Full Stack Developer' : 'Hardware Engineer'}. 
               {mode === 'software' ? ' Building the future, one line of code at a time. 💻' : ' Designing the future, one circuit at a time. ⚡'}
             </p>
           </div>
